@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.dao.UserMapper">
+
+<!--    <select id="list" resultType="UserPojo">-->
+<!--        select * from UserPojo-->
+<!--    </select>-->
+    
+    <select id="findLimit" resultType="UserPojo" parameterType="Integer">
+        select * from UserPojo
+        <where>
+            <if test="username != null and username != ''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="password != null and password != ''">
+                and password like concat('%',#{password},'%')
+            </if>
+        </where>
+        LIMIT #{currPageNo},#{pageSize}
+    </select>
+    <select id="findTotal" resultType="Integer">
+        select count(*) from UserPojo
+        <where>
+            <if test="username != null and username != ''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="password != null and password != ''">
+                and password like concat('%',#{password},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="add" parameterType="String">
+        insert into UserPojo(username,password,sex,address) values(#{username},#{password}
+        ,#{sex},#{address})
+    </insert>
+    <update id="update" parameterType="UserPojo">
+        update UserPojo set username = #{username},password = #{password},sex = #{sex}
+         ,address = #{address}where id = #{id}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        delete  from UserPojo where id = #{id}
+    </delete>
+    <select id="toupdate" resultType="UserPojo">
+        select * from UserPojo where id = #{id}
+    </select>
+</mapper>

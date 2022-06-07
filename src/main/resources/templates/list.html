@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:inline="none"></script>
+</head>
+<body>
+<center>
+    <form th:action="@{/list}" method="get">
+        <table>
+            <tr>
+                <td>姓名：<input type="text" name="username" id="username"/></td>
+                <td>密码：<input type="text" name="password"></td>
+                <td><input type="submit" value="搜索"></td>
+            </tr>
+        </table>
+    <table border="1">
+        <tr>
+            <td>编号</td>
+            <td>用户名</td>
+            <td>密码</td>
+            <td>性别</td>
+            <td>地址</td>
+            <td>操作</td>
+        </tr>
+        <tr th:each="user:${page.lists}">
+            <td th:text="${user.id}">编号</td>
+            <td th:text="${user.username}">用户名</td>
+            <td th:text="${user.password}">密码</td>
+            <td th:text="${user.sex}">性别</td>
+            <td th:text="${user.address}">地址</td>
+            <td>
+                <a th:href="@{/toupdate(id=${user.id})}">修改</a>
+                <a th:href="@{/delete(id=${user.id})}">删除</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <a th:href="@{/list(currPageNo=1)}">首页</a>
+                <th:block th:if="${page.currPageNo!=1}">
+                    <a th:href="@{/list(currPageNo=${page.currPageNo -1})}">上一页</a>
+                </th:block>
+                <th:block th:if="page.currPageNo != page.totalPageCount">
+                    <a th:href="@{/list(currPageNo=${page.currPageNo +1})}">下一页</a>
+                </th:block>
+                <th:block>
+                    <a th:href="@{/list(currPageNo=${page.totalPageCount})}">尾页</a>
+                </th:block>
+            </td>
+        </tr>
+        <a href="toadd">添加</a>
+    </table>
+    </form>
+</center>
+</body>
+</html>
