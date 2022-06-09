@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
 //    @Override
-//    public List<UserPojoddasdafas> list() {
+//    public List<UserPojoddasdafasdasdcal> list() {
 //        return userMapper.list();
 //    }
 
